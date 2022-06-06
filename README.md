@@ -6,6 +6,9 @@ This notebook explores correlations between weather and air quality since we kno
 
 
 ## Amazon Sustainability Data Initiative (ASDI) Datasets Used
+ASDI Homepage: https://sustainability.aboutamazon.com/environment/the-cloud/asdi \
+ASDI Datasets: https://registry.opendata.aws/collab/asdi/
+
 - **NOAA GSOD**\
   Consists of daily weather summaries from various NOAA weather stations.\
   Dataset URL : https://registry.opendata.aws/noaa-gsod/
@@ -25,3 +28,16 @@ This notebook explores correlations between weather and air quality since we kno
     - Sulfur Dioxide (SO2)
     - Nitrogen Dioxide (NO2)
     - Carbon Monoxide (CO)
+
+## AWS SageMaker Studio Lab
+You can sign up for SageMaker Studio Lab and use it for free without an AWS account. You can run for 4 hours with GPU or 12 hours with CPU and then logout and log back in for another session. Your data and notebooks are persisted. After clicking the launch button below, choose "download whole repo" and then "build conda environment" when prompted.
+
+When it's done installing and configuring the conda environment, open the "Nexrad_Demo.ipynb" notebook. Click-Enter to run each row and wait a moment to see the results of each line before proceeding to the next. The line marker should change to a number when it's successfully run that line, ie "[5]" means that it has run line 5.
+
+## Security
+
+See CONTRIBUTING for more information.
+
+## License
+
+This library is licensed under the MIT-0 License. See the LICENSE file.
