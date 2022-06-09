@@ -1,5 +1,5 @@
 # Source: https://raw.githubusercontent.com/jupyter/notebook/main/.gitignore
-# Custom additions...
+# Custom additions to NOT include built models or local csv files...
 AutogluonModels/*
 *.csv
 
