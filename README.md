@@ -1,14 +1,16 @@
 # aws-smsl-predict-airquality-via-weather
 A Jupyter Notebook that connects to Amazon Sustainability Data Initiative (ASDI) datasets from NOAA and OpenAQ to build a Machine Learning (ML) model to predict air quality via weather. This Jupyter Notebook can be run using Amazon SageMaker Studio Lab and open-source Amazon Sustainability Data Initiative (ASDI) datasets without needing an AWS account.
 
-[![Open in SageMaker Studio Lab](https://studiolab.sagemaker.aws/studiolab.svg)](https://github.com/aws-samples/aws-smsl-predict-airquality-via-weather/blob/main/aq_by_weather.ipynb)
+[![Open in SageMaker Studio Lab](https://studiolab.sagemaker.aws/studiolab.svg)](https://studiolab.sagemaker.aws/import/github/aws-samples/aws-smsl-predict-airquality-via-weather/blob/main/aq_by_weather.ipynb)
 
-## PROBLEM: 1 out of 8 deaths in the world is due to poor air quality (source: OpenAQ.org)
-This notebook explores correlations between weather and air quality since we know factors like temperatures, wind speeds, etc, affect certain air quality parameters. Predicting air quality based on weather can get into highly sophisticated ML techniques, but this demo shows how merging NOAA GSOD weather data with OpenAQ air quality data to build an ML model using AutoGluon (AutoML from AWS) can result in prediction accuracy of ~75-85% using Binary Classification models for the Los Angeles, CA, and Las Vegas, NV areas for a target parameter of 2.5 micron Particulate Matter (PM2.5).
+## PROBLEM: 1 out of 8 deaths in the world is due to poor air quality*
+This notebook explores correlations between weather and air quality since we know factors like temperatures, wind speeds, etc, affect certain air quality parameters. Predicting air quality based on weather can get into highly sophisticated ML techniques, but this demo shows how merging NOAA GSOD weather data with OpenAQ air quality data to build an ML model using AutoGluon (AutoML from AWS) can result in prediction accuracy of ~75-85% using Binary Classification models for the Los Angeles, CA, and Las Vegas, NV areas for a target parameter of 2.5 micron Particulate Matter (PM2.5).\
+*Source: OpenAQ.org
 
-## DATA: Amazon Sustainability Data Initiative (ASDI) Datasets for Weather and Air Quality
-ASDI Homepage: https://sustainability.aboutamazon.com/environment/the-cloud/asdi \
-ASDI Datasets: https://registry.opendata.aws/collab/asdi/
+## DATA: ASDI Datasets for Weather and Air Quality
+Learn more about the Amazon Sustainability Data Initiative (ASDI)...\
+**ASDI Homepage:** https://sustainability.aboutamazon.com/environment/the-cloud/asdi \
+**ASDI Datasets:** https://registry.opendata.aws/collab/asdi/
 
 - **NOAA GSOD**\
   Consists of daily weather summaries from various NOAA weather stations.\
@@ -35,19 +37,19 @@ A specific area to target is selected according to NOAA StationID and OpenAQ Loc
 
 The NOAA GSOD daily summary weather data is merged with OpenAQ daily averages by date for a given OpenAQ parameter (ie: one of the six parameters listed above). Additionally, the corresponding US EPA healthy threshold value is used to convert the daily average air quality measurement into a binary classification of { 0=Healthy, 1=Unhealthy }.
 
-AutoGluon is used to train a Binary Classification model using the merged dataset contain weather and air quality data.  Prediction accuracies observed ranged from ~75-85% for Particulate Matter 2.5 micron healthy vs unhealthy predictions and is largely dependent on how much data is available at the chosen location and that location's specific relationship between weather and air quality.
+AutoGluon is used to train a Binary Classification model using the merged dataset contain weather and air quality data.  Prediction accuracy observed ranged from ~75-90% for Particulate Matter 2.5 micron healthy vs unhealthy predictions and is largely dependent on how much data is available at the chosen location and that location's specific relationship between weather and air quality.
 
 ### Key Learnings
 - The relationship between weather and air quality varies geographically and this was confirmed.
-  - Feature Importance review shows differing factors in models built for Los Angeles vs Las Vegas.
+  - Feature Importance review shows differing factors in models built for different locations.
   - Academic research indicates the relationship can change by season and an engineered “MONTH” feature was important for most models.
-  - I expected “DAYOFWEEK” to be an important feature, but observed correlation was minimal.
-- Predicting a target measurement was infeasible, but predicting a binary “healthy” vs “unhealthy” classification based on US EPA threshold values yielded decent results (~80% accurate).
+  - An engineered “DAYOFWEEK” feature was expected to be important, but observed correlation was minimal.
+- Predicting a target measurement was infeasible, but predicting a binary “healthy” vs “unhealthy” classification based on US EPA threshold values yielded decent results (~75-90% accuracy metrics).
 
 ### Using Amazon SageMaker Studio Lab
 You can sign up for SageMaker Studio Lab and use it for free without an AWS account. You can run for 4 hours with GPU or 12 hours with CPU and then logout and log back in for another session. Your data and notebooks are persisted. After clicking the launch button below, choose "download whole repo" and then "build conda environment" when prompted.
 
-When it's done installing and configuring the conda environment, open the .ipynb notebook file. Click-Enter to run each row and wait a moment to see the results of each line before proceeding to the next. The line marker should change to a number when it's successfully run that line, ie "[5]" means that it has run line 5.
+When it's done installing and configuring the conda environment, open the .ipynb notebook file. Run each row and wait a moment to see the results of each line before proceeding to the next. The line marker should change to a number when it's successfully run that line, ie "[5]" means that it has run line 5.
 
 ## Security
 
