@@ -9,6 +9,21 @@ This Jupyter Notebook can be run using Amazon SageMaker Studio Lab and open-sour
 This notebook explores correlations between weather and air quality since we know factors like temperatures, wind speeds, etc, affect certain air quality parameters. Predicting air quality based on weather can get into highly sophisticated ML techniques, but this demo shows how merging NOAA GSOD weather data with OpenAQ air quality data to build an ML model using AutoGluon (AutoML from AWS) can result in prediction accuracy of ~75-90% using Binary Classification models for various high-pollution areas and air quality parameters (mostly tested for 2.5 micron Particulate Matter and some Ground Level Ozone).\
 *Source: [OpenAQ.org](https://OpenAQ.org)
 
+### Top 5 US Locations with Worst Air Quality
+Source: https://www.lung.org/research/sota/city-rankings/most-polluted-cities
+- By Particulate Pollution
+  1. Bakersfield, CA
+  2. Fresno-Madera-Hanford, CA
+  3. Visalia, CA
+  4. San Jose-San Francisco-Oakland, CA
+  5. Los Angeles-Long Beach, CA
+- By Ground Level Ozone
+  1. Los Angeles-Long Beach, CA
+  2. Bakersfield, CA
+  3. Visalia, CA
+  4. Fresno-Madera-Hanford, CA
+  5. Phoenix-Mesa, AZ
+
 ## DATA: ASDI Datasets for Weather and Air Quality
 Learn more about the Amazon Sustainability Data Initiative (ASDI)...\
 **ASDI Homepage:** https://sustainability.aboutamazon.com/environment/the-cloud/asdi \
@@ -47,6 +62,7 @@ AutoGluon is used to train a Binary Classification model using the merged datase
   - Academic research indicates the relationship can change by season and an engineered “MONTH” feature was important for most models.
   - An engineered “DAYOFWEEK” feature was expected to be important, but observed correlation was minimal.
 - Predicting a target measurement was infeasible, but predicting a binary “healthy” vs “unhealthy” classification based on US EPA threshold values yielded decent results (~75-90% accuracy metrics).
+- To learn more, research how climatology and deeper statistical analysis are merged into 3D models that incorporate emissions models, meteorological models, and chemical models.
 
 ### Using Amazon SageMaker Studio Lab
 You can sign up for SageMaker Studio Lab and use it for free without an AWS account. You can use both GPU-based and CPU-based runtimes with free included local storage (limits apply). Your data and notebooks are persisted automatically across sessions. After clicking the launch button below, choose "copy notebook only" and then "build conda environment" when prompted (or use the provided _pip install_ commands in the notebook).
