@@ -1,12 +1,12 @@
-# aws-smsl-predict-airquality-via-weather
-A Jupyter Notebook that connects to Amazon Sustainability Data Initiative (ASDI) datasets from NOAA and OpenAQ to build a Machine Learning (ML) model to predict air quality levels using weather data via a Binary Classification Autogluon model. This Notebook is NOT for scientific or health purposes.
+# ML Demo: Predicting Air Quality w/ ASDI NOAA + OpenAQ Datasets
+This demo consists of a Jupyter Notebook that connects to Amazon Sustainability Data Initiative (ASDI) datasets from NOAA and OpenAQ to build a Machine Learning (ML) model to predict air quality levels using weather data via a Binary Classification [AutoGluon](https://auto.gluon.ai/stable/index.html) model. The project's purpose is to demonstrate using two different types of ASDI datasets (files in Amazon S3 and HTTPS APIs) within a Jupyter Notebook, such as provided by Amazon SageMaker Studio Lab. This demo is NOT for scientific or health purposes.
 
-This Jupyter Notebook can be run using Amazon SageMaker Studio Lab and open-source Amazon Sustainability Data Initiative (ASDI) datasets without needing an AWS account.
+This Jupyter Notebook can be run for free using Amazon SageMaker Studio Lab and open-source Amazon Sustainability Data Initiative (ASDI) datasets without needing an AWS account.
 
 [![Open in SageMaker Studio Lab](https://studiolab.sagemaker.aws/studiolab.svg)](https://studiolab.sagemaker.aws/import/github/aws-samples/aws-smsl-predict-airquality-via-weather/blob/main/aq_by_weather.ipynb)
 
-## PROBLEM: 1 out of 8 deaths in the world is due to poor air quality*
-This notebook explores correlations between weather and air quality since we know factors like temperatures, wind speeds, etc, affect certain air quality parameters. Predicting air quality based on weather can get into highly sophisticated ML techniques, but this demo shows how merging NOAA GSOD weather data with OpenAQ air quality data to build an ML model using AutoGluon (AutoML from AWS) can result in prediction accuracy of ~75-90% using Binary Classification models for various high-pollution areas and air quality parameters (mostly tested for 2.5 micron Particulate Matter and some Ground Level Ozone).\
+## BACKGROUND: 1 out of 8 deaths in the world is due to poor air quality*
+This demo explores correlations between weather and air quality since we know factors like temperatures, wind speeds, etc, affect certain air quality parameters. Predicting air quality can get into highly sophisticated ML techniques, but this demo shows how merging NOAA GSOD weather data with OpenAQ air quality data to build an ML model using [AutoGluon](https://auto.gluon.ai/stable/index.html) (AutoML from AWS) can result in prediction accuracy of ~75-90% using Binary Classification models for various high-pollution areas and air quality parameters (mostly tested for 2.5 micron Particulate Matter and some Ground Level Ozone).\
 *Source: [OpenAQ.org](https://OpenAQ.org)
 
 ### Top 5 US Locations with Worst Air Quality
@@ -29,8 +29,8 @@ Learn more about the Amazon Sustainability Data Initiative (ASDI)...\
 **ASDI Homepage:** https://sustainability.aboutamazon.com/environment/the-cloud/asdi \
 **ASDI Datasets:** https://registry.opendata.aws/collab/asdi/
 
-- **NOAA GSOD**\
-  Consists of daily weather summaries from various NOAA weather stations.\
+- **National Oceanic and Atmospheric Administration: Global Surface Summary of the Day**\
+  NOAA GSOD consists of daily weather summaries from various NOAA weather stations.\
   Dataset URL : https://registry.opendata.aws/noaa-gsod/
   - Example Weather Parameters (features)
     - MAX: Maximum temperature (.1 Fahrenheit)
@@ -50,24 +50,27 @@ Learn more about the Amazon Sustainability Data Initiative (ASDI)...\
     - Carbon Monoxide (CO)
 
 ## PROCESS: Binary Classification Model via Amazon SageMaker Studio Lab
-A specific Scenario is selected which includes a location (eg: Los Angeles) and an air quality parameter to target as our label to predict (eg: pm2.5). Users can customize the predefined Scenarios, add their own, and select the Scenario to use throughout the Notebook. Instructions are provided at the top of the Notebook.
+This Notebook contains pre-defined scenarios that pair a physical location's weather (eg: Los Angeles) with an air quality parameter to predict (eg: PM2.5). Users can customize the pre-defined scenarios, add their own, and select the scenario to use throughout the Notebook via a drop-down list. Additional instructions are provided at the top of the Notebook.
 
-NOAA GSOD daily summary weather data is merged with OpenAQ daily averages by date for a given OpenAQ parameter (ie: one of the six parameters listed above). Additionally, the corresponding US EPA healthy threshold value is used to convert the daily average air quality measurement into a binary classification of { 0=Healthy, 1=Unhealthy }.
+NOAA GSOD daily summary weather data is merged with OpenAQ daily measurement averages by date for a given OpenAQ parameter (ie: one of the six parameters listed above). Additionally, corresponding US EPA unhealthy threshold values are used to convert the daily average air quality measurements into a binary classification of { 0=OKAY, 1=Unhealthy }.
 
-AutoGluon is used to train a Binary Classification model using the merged dataset contain weather and air quality data.  Prediction accuracy observed ranged from ~75-90% for Particulate Matter 2.5 micron healthy vs unhealthy predictions and is largely dependent on how much data is available at the chosen location and that location's specific relationship between weather and air quality. Some additional testing was done using Ground Level Ozone around Los Angeles.  See the following list of US cities with high amounts of PM2.5 and Ozone pollution, if you'd like to add more Scenarios. Non-US locations are possible where data exists and the Notebook provides an example Scenario for Lahore, Pakistan. See: [American Lung Association: Most Polluted Cities](https://www.lung.org/research/sota/city-rankings/most-polluted-cities)
+AutoGluon [_TabularPredictor_](https://auto.gluon.ai/stable/tutorials/tabular_prediction/index.html) is used to train a Binary Classification model using the merged dataset containing weather and air quality data.  Prediction accuracy observed ranged from ~75-90% for Particulate Matter 2.5 micron predictions of OKAY vs unhealthy and is largely dependent on how much data is available at the chosen location and that location's specific relationship between weather and air quality. Some additional testing was done using Ground Level Ozone around some of the pre-defined scenarios.  See the following list of US cities with high amounts of PM2.5 and Ozone pollution, if you'd like to add more scenarios. Non-US locations are possible where data exists and the Notebook provides an example scenario for Lahore, Pakistan. See: [American Lung Association: Most Polluted Cities](https://www.lung.org/research/sota/city-rankings/most-polluted-cities)
+
+## SUMMARY...
+This demo showed how to use a SageMaker Studio Lab Jupyter Notebook to connect to open-source Amazon Sustainability Data Initiative (ASDI) datasets both via Amazon S3 (NOAA weather data) and an HTTPS API (OpenAQ air quality averages). The NOAA weather data and OpenAQ measurement averages are merged into a single table with irrelevant features dropped. This table is then used to build an Autogluon [_TabularPredictor_](https://auto.gluon.ai/stable/tutorials/tabular_prediction/index.html) ML model to predict if weather features would result in a 0=OKAY or 1=Unhealthy air quality target label.
 
 ### Key Learnings
 - The relationship between weather and air quality varies geographically and this was confirmed.
   - Feature Importance review shows differing factors in models built for different locations.
   - Academic research indicates the relationship can change by season and an engineered “MONTH” feature was important for most models.
-  - An engineered “DAYOFWEEK” feature was expected to be important, but observed correlation was minimal.
-- Predicting a target measurement was infeasible, but predicting a binary “healthy” vs “unhealthy” classification based on US EPA threshold values yielded decent results (~75-90% accuracy metrics).
+  - An engineered “DAYOFWEEK” feature was expected to be important, but observed correlation was minimal and removing the feature improved most models.
+- Predicting a target measurement was infeasible, but predicting a binary “OKAY” vs “unhealthy” classification based on US EPA threshold values yielded decent results (~75-90% accuracy metrics).
 - To learn more, research how climatology and deeper statistical analysis are merged into 3D models that incorporate emissions models, meteorological models, and chemical models.
 
 ### Using Amazon SageMaker Studio Lab
-You can sign up for SageMaker Studio Lab and use it for free without an AWS account. You can use both GPU-based and CPU-based runtimes with free included local storage (limits apply). Your data and notebooks are persisted automatically across sessions. After clicking the launch button below, choose "copy notebook only" and then "build conda environment" when prompted (or use the provided _pip install_ commands in the notebook).
+You can sign up for SageMaker Studio Lab and use it for free without an AWS account. You can use both GPU-based and CPU-based runtimes with free included local storage (limits apply). Your data and notebooks are persisted automatically across sessions. After clicking the launch button below, choose "clone entire repo" and then "build conda environment" when prompted (or use the provided _pip install_ commands in the notebook).
 
-When it's done installing and configuring the conda environment, open the .ipynb notebook file. Run each row and wait a moment to see the results of each line before proceeding to the next. The line marker should change to a number when it's successfully run that line, ie "[5]" means that it has run line 5.
+When it's done installing and configuring the conda environment, open the .ipynb notebook file. Run each cell and wait a moment to see the results of each line before proceeding to the next. The line marker should change to a number when it's successfully run that line, ie "[5]" means that it has run cell 5.
 
 [![Open in SageMaker Studio Lab](https://studiolab.sagemaker.aws/studiolab.svg)](https://studiolab.sagemaker.aws/import/github/aws-samples/aws-smsl-predict-airquality-via-weather/blob/main/aq_by_weather.ipynb)
 
