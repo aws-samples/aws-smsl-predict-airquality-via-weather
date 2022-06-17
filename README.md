@@ -1,7 +1,7 @@
 # ML Demo: Predicting Air Quality w/ ASDI NOAA + OpenAQ Datasets
 This demo consists of a Jupyter Notebook that connects to Amazon Sustainability Data Initiative (ASDI) datasets from NOAA and OpenAQ to build a Machine Learning (ML) model to predict air quality levels using weather data via a Binary Classification [AutoGluon](https://auto.gluon.ai/stable/index.html) model. The project's purpose is to demonstrate using two different types of ASDI datasets (files in Amazon S3 and HTTPS APIs) within a Jupyter Notebook, such as provided by Amazon SageMaker Studio Lab. This demo is NOT for scientific or health purposes.
 
-This Jupyter Notebook can be run for free using Amazon SageMaker Studio Lab and open-source Amazon Sustainability Data Initiative (ASDI) datasets without needing an AWS account.
+This Jupyter Notebook can be run for free using Amazon SageMaker Studio Lab (SMSL) and open-source Amazon Sustainability Data Initiative (ASDI) datasets without needing an AWS account. See detailed SMSL instructions below.
 
 [![Open in SageMaker Studio Lab](https://studiolab.sagemaker.aws/studiolab.svg)](https://studiolab.sagemaker.aws/import/github/aws-samples/aws-smsl-predict-airquality-via-weather/blob/main/aq_by_weather.ipynb)
 
@@ -67,8 +67,8 @@ This demo showed how to use a SageMaker Studio Lab Jupyter Notebook to connect t
 - Predicting a target measurement was infeasible, but predicting a binary “OKAY” vs “unhealthy” classification based on US EPA threshold values yielded decent results (~75-90% accuracy metrics).
 - To learn more, research how climatology and deeper statistical analysis are merged into 3D models that incorporate emissions models, meteorological models, and chemical models.
 
-### Using Amazon SageMaker Studio Lab
-You can sign up for SageMaker Studio Lab and use it for free without an AWS account. You can use both GPU-based and CPU-based runtimes with free included local storage (limits apply). Your data and notebooks are persisted automatically across sessions. After clicking the launch button below, choose "clone entire repo" and then "build conda environment" when prompted (or use the provided _pip install_ commands in the notebook).
+### Using Amazon SageMaker Studio Lab (SMSL)
+You can sign up for SageMaker Studio Lab and use it for free without an AWS account. You can use both GPU-based and CPU-based runtimes with free included local storage (limits apply). Your data and notebooks are persisted automatically across sessions. After clicking the launch button below, choose "clone entire repo" and "build conda environment" when prompted (or use the provided _pip install_ commands in the notebook).
 
 When it's done installing and configuring the conda environment, open the .ipynb notebook file. Run each cell and wait a moment to see the results of each line before proceeding to the next. The line marker should change to a number when it's successfully run that line, ie "[5]" means that it has run cell 5.
 
